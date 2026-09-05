@@ -33,6 +33,7 @@ const upload = multer({
 
 app.post("/api/upload", upload.single("file"), function (req, res) {
   const file = req.file;
+  if (!file) return res.status(400).json("Only image files are allowed.");
   res.status(200).json(file.filename);
 });
 

@@ -32,10 +32,14 @@ export const login = (req, res) => {
     if (!bcrypt.compareSync(req.body.password, user.password))
       return res.status(400).json("Wrong username or password!");
 
-    const token = jwt.sign({ id: user._id.toString() }, "jwtkey");
+    const token = jwt.sign({ id: user._id.toString() }, process.env.JWT_SECRET);
     const { password, _id, ...other } = user;
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        secure: process.env.NODE_ENV === "production",
+      })
       .status(200)
       .json({ ...other, id: _id.toString() });
   };
