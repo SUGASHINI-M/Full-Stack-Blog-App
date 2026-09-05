@@ -1,0 +1,17 @@
+# Environment and secrets
+api/.env
+
+# Dependencies
+api/node_modules/
+client/node_modules/
+
+# Build output
+client/build/
+
+# Local database files
+api/blog.db
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
